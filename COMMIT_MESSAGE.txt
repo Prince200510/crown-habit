@@ -1,0 +1,10 @@
+feat: release Crown Habit v1.0 with AI food scanner, auto step sensor, macro routines, and fire streak calendar
+
+- Add Google Gemini 2.5 Flash AI meal recognition with smart Thali multi-item grouping and expandable details
+- Implement native Android hardware pedometer plugin (StepCounterPlugin) and 3-axis accelerometer calorie deficit engine
+- Support inline editable calories, protein, carbs, and fat on daily routine tasks with automatic macro logging on completion
+- Add Daily Fire Streak (🔥) tracker directly inside the History Calendar for days with 100% habit completion and net calorie deficit
+- Enable real-time cross-device Cloud Firestore synchronization (onSnapshot) with timestamp-aware offline-first conflict resolution
+- Configure custom Crown vector icon (ic_stat_crown) for Android local notifications and adaptive launcher icons
+
+Author: Prince Maurya <princemaurya8879@gmail.com>

@@ -1,0 +1,15 @@
+{
+  "appId": "com.crownhabit.app",
+  "appName": "CROWN HABIT",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_crown",
+      "iconColor": "#173B68",
+      "sound": "default"
+    }
+  }
+}

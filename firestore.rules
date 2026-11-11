@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidString(val, maxLen) {
+      return val is string && val.size() <= maxLen;
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId)
+        && request.resource.data.keys().hasOnly([
+          'displayName',
+          'email',
+          'timezone',
+          'resetTime',
+          'notificationsEnabled',
+          'followUpMinutes',
+          'nutritionGoals',
+          'scannerPreferences',
+          'updatedAt',
+          'createdAt'
+        ]);
+      allow delete: if isOwner(userId);
+
+      match /routines/{routineId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && isValidString(request.resource.data.name, 120)
+          && request.resource.data.scheduledTime is string;
+        allow delete: if isOwner(userId);
+      }
+
+      match /dailyRecords/{dateKey} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && dateKey.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+          && request.resource.data.date == dateKey;
+        allow delete: if isOwner(userId);
+
+        match /foodEntries/{entryId} {
+          allow read, write: if isOwner(userId);
+        }
+      }
+    }
+  }
+}
